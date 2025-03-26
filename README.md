@@ -18,3 +18,6 @@ MIGRACIONES
 : EstadoProducto
 : UsuarioProducto
 
+BD
+: PQSQL
+: cambia las credenciales respecto a tu BD de tu pc

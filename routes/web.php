@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProveedorController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,4 +26,9 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+    Route::get('/proveedor', [ProveedorController::class, 'index'])->name('proveedor.index');
+    Route::get('/user/{id}', function ($id) {
+        $user = \App\Models\User::findOrFail($id);
+        return view('proveedor.user-detail', ['user' => $user]);
+    })->name('user.detail');
 });
