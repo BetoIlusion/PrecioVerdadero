@@ -1,60 +1,56 @@
+
 <x-guest-layout>
-    <x-authentication-card>
-        <x-slot name="logo">
-            <x-authentication-card-logo />
-        </x-slot>
+    @php
+        $backgroundImage = asset('images/fondo_comida.jpg');
+        $logoImage = asset('images/logo_pv.png');
+    @endphp
 
-        <x-validation-errors class="mb-4" />
-
-        <form method="POST" action="{{ route('register') }}">
-            @csrf
-
-            <div>
-                <x-label for="name" value="{{ __('Name') }}" />
-                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
+    <div class="min-h-screen flex items-center justify-center bg-cover bg-center"
+        style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('{{ $backgroundImage }}')">
+        <div class="w-full max-w-xs px-6 py-6 bg-white bg-opacity-90 backdrop-blur-lg rounded-xl shadow-lg">
+            <div class="flex justify-center mb-4">
+                <img src="{{ $logoImage }}" class="w-12 h-12 object-contain" alt="Logo Gourmet" />
             </div>
 
-            <div class="mt-4">
-                <x-label for="email" value="{{ __('Email') }}" />
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
-            </div>
+            <h1 class="text-xl font-bold text-center text-gray-800 mb-1">Regístrate</h1>
+            <p class="text-gray-700 text-sm font-medium mb-1">Tipo de registro: {{ request()->query('tipo') }}</p>
 
-            <div class="mt-4">
-                <x-label for="password" value="{{ __('Password') }}" />
-                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
-            </div>
+            <x-validation-errors class="mb-3 bg-red-50 p-2 rounded text-sm" />
 
-            <div class="mt-4">
-                <x-label for="password_confirmation" value="{{ __('Confirm Password') }}" />
-                <x-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
-            </div>
-
-            @if (Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature())
-                <div class="mt-4">
-                    <x-label for="terms">
-                        <div class="flex items-center">
-                            <x-checkbox name="terms" id="terms" required />
-
-                            <div class="ms-2">
-                                {!! __('I agree to the :terms_of_service and :privacy_policy', [
-                                        'terms_of_service' => '<a target="_blank" href="'.route('terms.show').'" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">'.__('Terms of Service').'</a>',
-                                        'privacy_policy' => '<a target="_blank" href="'.route('policy.show').'" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">'.__('Privacy Policy').'</a>',
-                                ]) !!}
-                            </div>
-                        </div>
-                    </x-label>
+            <form method="POST" action="{{ route('register') }}" class="space-y-3">
+                @csrf
+                
+                <div>
+                    <x-label for="name" value="{{ __('Nombre') }}" class="text-gray-700 text-sm font-medium" />
+                    <x-input id="name" class="block w-full text-sm" type="text" name="name" :value="old('name')" required autofocus placeholder="Tu nombre" />
                 </div>
-            @endif
 
-            <div class="flex items-center justify-end mt-4">
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
-                    {{ __('Already registered?') }}
-                </a>
+                <div>
+                    <x-label for="email" value="{{ __('Email') }}" class="text-gray-700 text-sm font-medium" />
+                    <x-input id="email" class="block w-full text-sm" type="email" name="email" :value="old('email')" required placeholder="tu@email.com" />
+                </div>
 
-                <x-button class="ms-4">
-                    {{ __('Register') }}
+                <div>
+                    <x-label for="password" value="{{ __('Contraseña') }}" class="text-gray-700 text-sm font-medium" />
+                    <x-input id="password" class="block w-full text-sm" type="password" name="password" required placeholder="••••••••" />
+                </div>
+
+                <div>
+                    <x-label for="password_confirmation" value="{{ __('Confirmar Contraseña') }}" class="text-gray-700 text-sm font-medium" />
+                    <x-input id="password_confirmation" class="block w-full text-sm" type="password" name="password_confirmation" required placeholder="••••••••" />
+                </div>
+
+                <input id="tipo" type="hidden" name="tipo" value="{{ request()->query('tipo') }}">
+
+                
+                <x-button class="w-full bg-amber-600 hover:bg-amber-700 text-white py-2 text-sm rounded-md font-medium">
+                    {{ __('Registrarse') }}
                 </x-button>
-            </div>
-        </form>
-    </x-authentication-card>
+                
+                <div class="text-center text-xs text-gray-600 mt-3">
+                    ¿Ya tienes cuenta? <a href="{{ route('login') }}" class="text-amber-600 hover:text-amber-800">Inicia sesión</a>
+                </div>
+            </form>
+        </div>
+    </div>
 </x-guest-layout>
