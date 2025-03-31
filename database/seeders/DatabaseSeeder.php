@@ -19,5 +19,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'edberto1@gmail.com',
             'password' => bcrypt('123456789'),
         ]);
+
+        $this->call(RoleSeeder::class);
     }
 }
