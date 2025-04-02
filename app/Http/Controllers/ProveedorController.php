@@ -17,6 +17,10 @@ class ProveedorController extends Controller
         
         return view('proveedor.indexProveedor', compact('users'));
     }
+    public function prueba()
+    {
+        return "view('proveedor.prueba')";
+    }
 
     /**
      * Show the form for creating a new resource.

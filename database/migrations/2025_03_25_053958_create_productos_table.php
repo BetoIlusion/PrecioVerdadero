@@ -14,7 +14,15 @@ return new class extends Migration
         Schema::create('productos', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
+            $table->string('marca');
+            $table->boolean('disponibilidad')->default(true);
+            $table->boolean('estado')->default(true);
             $table->timestamps();
+            $table->unsignedBigInteger('id_unidad');
+            $table->unsignedBigInteger('id_');
+            // Definir las relaciones foráneas
+            // $table->foreign('id_unidad')->references('id')->on('unidades')->onDelete('cascade');
+            // $table->foreign('id_tipo')->references('id')->on('tipos')->onDelete('cascade');
         });
     }
 

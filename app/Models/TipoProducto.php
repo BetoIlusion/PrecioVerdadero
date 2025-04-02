@@ -5,15 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class EstadoProducto extends Model
+class TipoProducto extends Model
 {
     use HasFactory;
     protected $fillable = [
-    'estado_producto',
-    'updated_date',
-    'estado',
-];
-    
+        'tipo',
+        'estado'
+    ];
     protected $hidden = [
         'created_at',
         'updated_at'

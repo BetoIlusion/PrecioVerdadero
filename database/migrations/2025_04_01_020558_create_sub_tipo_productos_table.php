@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('unidad_productos', function (Blueprint $table) {
+        Schema::create('sub_tipo_productos', function (Blueprint $table) {
             $table->id();
-            $table->string('unidad');
+            $table->string('sub_tipo');
             $table->boolean('estado')->default(true);
+            $table->unsignedBigInteger('id_tipo');
             $table->timestamps();
         });
     }
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('unidad_productos');
+        Schema::dropIfExists('sup_tipo_productos');
     }
 };

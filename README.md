@@ -11,12 +11,17 @@ FRONTEND
 PAQUETES INSTALADOS
 : Jetstream
 : Livewire
+: spatie v6
+
 
 MIGRACIONES
-: Producto
-: UnidadProducto
 : EstadoProducto
+: UnidadProducto
+: Producto
 : UsuarioProducto
+: EstadoUsuario
+
+
 
 BD
 : PQSQL
