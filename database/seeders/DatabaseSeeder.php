@@ -28,7 +28,7 @@ class DatabaseSeeder extends Seeder
             SubTipoProductoSeeder::class, // Llama al seeder de SubTipoProducto
             //EstadoProductoSeeder::class, // Llama al seeder de EstadoProducto
             UnidadProductoSeedor::class, // Llama al seeder de UnidadProducto
-            
+            //pepito
         ]);
     }
 }
