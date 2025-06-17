@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
@@ -18,18 +19,42 @@ class AuthController extends Controller
         return response()->json($users);
     }
     // Registrar un nuevo usuario
+
     public function register(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
+            'email' => 'required|string|email|max:255|unique:users,email',
+            'password' => 'required|string|min:8',
+        ], [
+            'name.required' => 'El nombre es obligatorio.',
+            'name.string' => 'El nombre debe ser texto.',
+            'name.max' => 'El nombre no debe exceder 255 caracteres.',
+
+            'email.required' => 'El correo es obligatorio.',
+            'email.string' => 'El correo debe ser texto.',
+            'email.email' => 'El correo no es válido.',
+            'email.max' => 'El correo no debe exceder 255 caracteres.',
+            'email.unique' => 'Este correo ya está registrado.',
+
+            'password.required' => 'La contraseña es obligatoria.',
+            'password.string' => 'La contraseña debe ser texto.',
+            'password.min' => 'Debe tener mínimo 8 caracteres.',
+
         ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Errores de validación.',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'telefono' => $request->telefono ?? null, // Asignar teléfono si se proporciona
         ]);
 
         $token = $user->createToken('auth_token')->plainTextToken;
@@ -85,7 +110,48 @@ class AuthController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'sometimes|string|max:255',
+            'email' => 'sometimes|string|email|max:255|unique:users,email,' . $user->id,
+            'telefono' => 'sometimes|string|max:15',
+            'password' => 'sometimes|string|min:8|confirmed',
+        ], [
+            'name.string' => 'El nombre debe ser texto.',
+            'name.max' => 'El nombre no debe exceder 255 caracteres.',
+
+            'email.email' => 'Formato de correo inválido.',
+            'email.max' => 'El correo no debe exceder 255 caracteres.',
+            'email.unique' => 'Este correo ya está en uso.',
+
+            'telefono.string' => 'El teléfono debe ser texto.',
+            'telefono.max' => 'Máximo 15 caracteres en teléfono.',
+
+            'password.min' => 'La contraseña debe tener al menos 8 caracteres.',
+            'password.confirmed' => 'Las contraseñas no coinciden.',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Errores de validación.',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        // Actualización de campos si están presentes
+        $user->fill($request->only(['name', 'email', 'telefono']));
+
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->password);
+        }
+
+        $user->save();
+
+        return response()->json([
+            'message' => 'Usuario actualizado correctamente.',
+            'user' => $user,
+        ], 200);
     }
 
     /**

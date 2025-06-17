@@ -18,4 +18,7 @@ Route::prefix('auth')->group(function () {
     
     // Iniciar sesión (pública)
     Route::post('/login', [AuthController::class, 'login']);
+
+    // Actualizar usuario (protegida)
+    Route::put('/users/{id}', [AuthController::class, 'update'])->middleware('auth:sanctum');
 });
