@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tipo_productos', function (Blueprint $table) {
+        Schema::create('historial_productos', function (Blueprint $table) {
             $table->id();
-            $table->string('tipo');
+            $table->decimal('precio', 8, 2);
+            $table->date('fecha'); // Para guardar solo la fecha
+            $table->dateTime('fecha_hora'); // Para guardar fecha y hora para análisis temporal
             $table->timestamps();
         });
     }
@@ -23,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tipo_productos');
+        Schema::dropIfExists('historial_productos');
     }
 };

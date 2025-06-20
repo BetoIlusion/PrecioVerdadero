@@ -12,4 +12,5 @@ class ProductoController extends Controller
         $productos = Producto::all();
         return view('entidades.productos.index');
     }
+    
 }

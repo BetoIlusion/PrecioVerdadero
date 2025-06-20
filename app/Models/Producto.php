@@ -12,7 +12,6 @@ class Producto extends Model
         'nombre',
         'marca',
         'disponibilidad',
-        'estado',
         'id_unidad',
         'id_sub_tipo',
     ];

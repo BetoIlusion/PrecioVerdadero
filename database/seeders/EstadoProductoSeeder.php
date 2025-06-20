@@ -14,10 +14,12 @@ class EstadoProductoSeeder extends Seeder
      */
     public function run(): void
     {
-        // DB::table('estado_productos')->insert([
-        //     ['estado_producto' => 'Disponible', 'updated_date' => now(), 'estado' => true],
-        //     ['estado_producto' => 'Agotado', 'updated_date' => now(), 'estado' => false],
-        //     ['estado_producto' => 'En tránsito', 'updated_date' => now(), 'estado' => true],
-        // ]);
+        DB::table('estado_productos')->insert([
+            ['estado_producto' => 'actualizado', 'updated_date' => now()],
+            ['estado_producto' => 'desactualizado', 'updated_date' => now()],
+            ['estado_producto' => 'inhabilitado', 'updated_date' => now()],
+            ['estado_producto' => 'antiguo', 'updated_date' => now()],
+
+        ]);
     }
 }

@@ -28,17 +28,17 @@ class RoleSeeder extends Seeder
 
     // Crear roles y asignar permisos
     $superAdmin = Role::firstOrCreate(['name' => 'Super Admin']);
-    $admin = Role::firstOrCreate(['name' => 'cliente']);
-    $user = Role::firstOrCreate(['name' => 'proveedor']);
+    $cliente = Role::firstOrCreate(['name' => 'cliente']);
+    $mercader = Role::firstOrCreate(['name' => 'mercader']);
 
     // Asignar todos los permisos al Super Admin
     $superAdmin->syncPermissions($permissions);
 
     // Asignar permisos específicos a Admin
-    $admin->syncPermissions(['edit content', 'view dashboard']);
+    $cliente->syncPermissions(['edit content', 'view dashboard']);
 
     // Asignar permisos básicos a User
-    $user->syncPermissions(['view dashboard']);
+    $mercader->syncPermissions(['view dashboard']);
 
     // Asignar rol Super Admin al primer usuario (opcional)
     $firstUser = \App\Models\User::first();

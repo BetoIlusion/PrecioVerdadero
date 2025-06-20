@@ -42,16 +42,16 @@ Route::middleware([
     Route::prefix('admin')->middleware('role:Super Admin')->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.index');
         //INVENTARIO
-        Route::get('/inventario', [InventarioController::class, 'index'])->name('admin.inventario');
-        //TIPO PRODUCTO
-        Route::get('/tipo-producto', [TipoProductoController::class, 'index'])->name('tipo-producto.index');
-        Route::get('/tipo-producto/create', [TipoProductoController::class, 'create'])->name('tipo-producto.create');
-        Route::post('/tipo-producto', [TipoProductoController::class, 'store'])->name('tipo-producto.store');
-        Route::get('/tipo-producto/{id}/edit', [TipoProductoController::class, 'edit'])->name('tipo-producto.edit');
-        Route::put('/tipo-producto/{id}', [TipoProductoController::class, 'update'])->name('tipo-producto.update');
-        Route::delete('/tipo-producto/{id}', [TipoProductoController::class, 'destroy'])->name('tipo-producto.destroy');
+        // Route::get('/inventario', [InventarioController::class, 'index'])->name('admin.inventario');
+        // //TIPO PRODUCTO
+        // Route::get('/tipo-producto', [TipoProductoController::class, 'index'])->name('tipo-producto.index');
+        // Route::get('/tipo-producto/create', [TipoProductoController::class, 'create'])->name('tipo-producto.create');
+        // Route::post('/tipo-producto', [TipoProductoController::class, 'store'])->name('tipo-producto.store');
+        // Route::get('/tipo-producto/{id}/edit', [TipoProductoController::class, 'edit'])->name('tipo-producto.edit');
+        // Route::put('/tipo-producto/{id}', [TipoProductoController::class, 'update'])->name('tipo-producto.update');
+        // Route::delete('/tipo-producto/{id}', [TipoProductoController::class, 'destroy'])->name('tipo-producto.destroy');
         //SUBTIPO PRODUCTO
-        
+
         //PRODUCTO
         Route::get('/productos', [ProductoController::class, 'index'])->name('productos.index');
         Route::get('/dashboard', [SuperAdminController::class, 'index'])->name('super.dashboard');
@@ -65,7 +65,7 @@ Route::middleware([
     //========================================================
     Route::prefix('proveedor')->middleware('role:proveedor')->group(function () {
         Route::get('/dashboard', function () {
-            return view('dashboard'); 
+            return view('dashboard');
         })->name('proveedor.dashboard');
         Route::get('/inventario', [InventarioController::class, 'index'])->name('proveedor.inventario');
         Route::get('/inventario/create', [InventarioController::class, 'create'])->name('inventario.create');

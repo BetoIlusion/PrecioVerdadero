@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('usuario_productos', function (Blueprint $table) {
             $table->id();
+            $table->decimal('precio', 8, 2);
+            $table->boolean('existe')->default(true);
             $table->unsignedBigInteger('id_usuario')->nullable(false);
             $table->unsignedBigInteger('id_producto');
             $table->unsignedBigInteger('id_estado');
-            $table->decimal('precio', 8, 2);
-            $table->boolean('existe')->default(true);
             $table->timestamps();
 
             // Las claves foráneas se pueden agregar aquí directamente

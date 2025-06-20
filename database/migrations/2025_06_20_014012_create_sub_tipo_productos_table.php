@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('sub_tipo_productos', function (Blueprint $table) {
             $table->id();
-            $table->string('sub_tipo');
-            $table->boolean('estado')->default(true);
-            $table->unsignedBigInteger('id_tipo');
+            $table->string('sub_tipo')->unique();
+
+            $table->integer('id_tipo')->unsigned();
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('sup_tipo_productos');
+        Schema::dropIfExists('sub_tipo_productos');
     }
 };

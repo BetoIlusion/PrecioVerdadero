@@ -9,13 +9,16 @@ class EstadoProducto extends Model
 {
     use HasFactory;
     protected $fillable = [
-    'estado_producto',
-    'updated_date',
-    'estado',
-];
+        'estado_producto',
+        'updated_date',
+    ];
     
     protected $hidden = [
         'created_at',
         'updated_at'
     ];
+    public function productos()
+    {
+        return $this->hasMany(Producto::class, 'id_estado');
+    }
 }

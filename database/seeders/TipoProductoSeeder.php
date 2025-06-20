@@ -13,19 +13,19 @@ class TipoProductoSeeder extends Seeder
      */
     public function run(): void
     {
-        // Seeder 1: Bebidas
+        // Seeder 1: alimentos
         DB::table('tipo_productos')->insert([
-            'tipo' => 'alimento',
+            'tipo' => 'alimentos',
         ]);
 
-        // Seeder 2: Lácteos
+        // Seeder 2: ferreteria
         DB::table('tipo_productos')->insert([
-            'tipo' => 'herramienta',
+            'tipo' => 'ferreteria',
         ]);
 
-        // Seeder 3: Carnes
+        // Seeder 3: casa
         DB::table('tipo_productos')->insert([
-            'tipo' => 'ropa',
+            'tipo' => 'casa',
         ]);
     }
 }

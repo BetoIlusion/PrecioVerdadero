@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             // Para fechas en Laravel se usa timestamp o dateTime
             // Se guarda automáticamente en formato Y-m-d H:i:s (ej: 2025-03-24 15:30:00)
-            $table->string('estado_producto');
+            $table->string('estado_producto')->unique();
             $table->timestamp('updated_date')->useCurrent();
-            $table->boolean('estado')->default(true);
+            // $table->boolean('estado')->default(true);
             $table->timestamps();
         });
     }

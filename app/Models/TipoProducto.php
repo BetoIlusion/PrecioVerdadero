@@ -10,10 +10,14 @@ class TipoProducto extends Model
     use HasFactory;
     protected $fillable = [
         'tipo',
-        'estado'
+
     ];
     protected $hidden = [
         'created_at',
         'updated_at'
     ];
+    public function subTipos()
+    {
+        return $this->hasMany(SubTipoProducto::class, 'id_tipo');
+    }
 }
