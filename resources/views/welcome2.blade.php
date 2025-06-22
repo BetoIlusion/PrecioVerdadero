@@ -82,7 +82,7 @@
                 <!-- Card Azul -->
                 <a href="{{ route('register', ['tipo' => 'proveedor']) }}" class="card-hover card-glow transition-all duration-300 ease-in-out">
                     <div class="bg-blue-600 rounded-xl p-6 text-white h-64 flex flex-col relative overflow-hidden">
-                        <h2 class="text-2xl font-semibold mb-3">Proveedor</h2>
+                        <h2 class="text-2xl font-semibold mb-3">Mercader</h2>
                         <p class="mb-4 flex-grow">Ingresa tus productos y refleja el valor verdadero en el mercado</p>
                         <div class="absolute bottom-4 right-4 bg-blue-700 backdrop-blur-md p-2 rounded-full">
                             <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"

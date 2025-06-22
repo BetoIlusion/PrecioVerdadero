@@ -12,9 +12,10 @@ class ProductoController extends Controller
 {
     public function index()
     {
-        $productos = Producto::whereDoesntHave('usuarioProductos', function ($query) {
-            $query->where('existe', true);
-        })->get();
+            $productos = Producto::all();
+        // $productos = Producto::whereDoesntHave('usuarioProductos', function ($query) {
+        //     $query->where('existe', true);
+        // })->get();
         return response()->json($productos);
     }
     public function show($id)

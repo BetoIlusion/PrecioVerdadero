@@ -12,7 +12,7 @@ use App\Http\Controllers\API\UsuarioProductoController as APIUsuarioProductoCont
 use App\Http\Controllers\API\HistorialProductoController as APIHistorialProductoController;
 use App\Http\Controllers\API\PresupuestoController as APIPresupuestoController;
 use App\Http\Controllers\API\TiendaController as APITiendaController;
-
+use App\Http\Controllers\API\ActividadController as APIActividadController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -74,6 +74,14 @@ Route::middleware('auth:sanctum')->group(function () {
     // ruta directa para obtener los productos X bajo precio X ubicacion mas cercanas
     Route::get('/tienda/productos/bajo-precio', [APIProductoController::class, 'getProductosBajoPrecioTienda'])->name('productos.bajo-precio.tienda');
     
+    // ============================
+    // ACTIVIDAD - TIPO ACTIVIDAD
+    // ============================
+    // ruta para insertar una activadad de 'interes' de ese producto de X tienda/mercader cuando el usuario/cliente lo ve
+    Route::post('/cliente/mercader/{id}/interes', [APIActividadController::class, 'storeInteres'])->name('actividad.interes.store');
+
+
+
 
 
 

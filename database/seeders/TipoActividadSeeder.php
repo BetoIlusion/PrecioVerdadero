@@ -16,7 +16,7 @@ class TipoActividadSeeder extends Seeder
         $tipos = [
             'Me Gusta',
             "No Me Gusta",
-            "Interesado",
+            "Me interesa",
             "No Me Interesa",
         ];
 
