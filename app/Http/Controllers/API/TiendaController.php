@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Ubicacion;
 use App\Models\Tienda;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Producto;
 
 class TiendaController extends Controller
 {
@@ -88,4 +89,5 @@ class TiendaController extends Controller
         $ubicacion->update($request->all());
         return response()->json($ubicacion);
     }
+    
 }

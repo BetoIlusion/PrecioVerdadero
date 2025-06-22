@@ -62,7 +62,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('/presupuesto', APIPresupuestoController::class);
 
     // ==============================
-    // TIENDAS
+    // TIENDAS - UBICACION
     // ==============================
     Route::get('/tienda', [APITiendaController::class, 'getTienda'])->name('tienda.index');
     Route::post('/tienda', [APITiendaController::class, 'createTienda'])->name('tienda.store');
@@ -71,6 +71,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/tienda/ubicacion/{id}', [APITiendaController::class, 'updateUbicacion'])->name('tienda.ubicacion.update');
     Route::put('/tienda/{id}', [APITiendaController::class, 'updateTienda'])->name('tienda.update');
     Route::delete('/tienda/{id}', [APITiendaController::class, 'destroyTienda'])->name('tienda.destroy');
+    // ruta directa para obtener los productos X bajo precio X ubicacion mas cercanas
+    Route::get('/tienda/productos/bajo-precio', [APIProductoController::class, 'getProductosBajoPrecioTienda'])->name('productos.bajo-precio.tienda');
+    
+
+
+
 
 });
 

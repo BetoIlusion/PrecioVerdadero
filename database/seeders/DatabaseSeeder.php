@@ -18,11 +18,13 @@ class DatabaseSeeder extends Seeder
         $this->call([
             SuperAdminSeeder::class,
             RoleSeeder::class,
+            UsuarioSeeder::class,
             TipoProductoSeeder::class,
             SubTipoProductoSeeder::class,
             UnidadProductoSeedor::class,
             EstadoProductoSeeder::class,
             ProductoSeeder::class,
+            TipoActividadSeeder::class,
 
         ]);
         // $user = \App\Models\User::factory()->create([

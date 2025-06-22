@@ -48,4 +48,49 @@ class Producto extends Model
         }
         return false;
     }
+    public function usuarioProductos()
+    {
+        return $this->hasMany(UsuarioProducto::class, 'id_producto');
+    }
+    public function listaBajoPrecioTienda($id, $mi_latitud, $mi_longitud, $id_producto)
+    {
+        // Traer los UsuarioProducto (mercaderes) con el producto disponible
+        $usuarioProductos = UsuarioProducto::where('id_producto', $id_producto)
+            ->where('existe', true)
+            ->with(['tienda.ubicacion'])
+            ->get();
+
+        // Mapear para agregar precio y distancia
+        $result = $usuarioProductos->map(function ($usuarioProducto) use ($mi_latitud, $mi_longitud) {
+            $tienda = $usuarioProducto->tienda;
+            $ubicacion = $tienda ? $tienda->ubicacion : null;
+            $distancia = null;
+            if ($ubicacion) {
+                // Calcular distancia Haversine
+                $theta = $mi_longitud - $ubicacion->longitud;
+                $distancia = rad2deg(acos(
+                    sin(deg2rad($mi_latitud)) * sin(deg2rad($ubicacion->latitud)) +
+                    cos(deg2rad($mi_latitud)) * cos(deg2rad($ubicacion->latitud)) * cos(deg2rad($theta))
+                )) * 111.13384; // Aproximación km
+            }
+            return [
+                'tienda_id' => $tienda ? $tienda->id : null,
+                'nombre_tienda' => $tienda ? $tienda->nombre : null,
+                'precio' => $usuarioProducto->precio,
+                'ubicacion' => $ubicacion ? [
+                    'latitud' => $ubicacion->latitud,
+                    'longitud' => $ubicacion->longitud,
+                    'direccion' => $ubicacion->direccion,
+                ] : null,
+                'distancia' => $distancia,
+            ];
+        });
+
+        // Ordenar por precio y luego por distancia
+        $result = $result->sortBy([['precio', 'asc'], ['distancia', 'asc']])->values();
+
+        return $result;
+    }
+
+
 }

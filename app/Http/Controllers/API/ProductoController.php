@@ -15,7 +15,6 @@ class ProductoController extends Controller
         $productos = Producto::whereDoesntHave('usuarioProductos', function ($query) {
             $query->where('existe', true);
         })->get();
-
         return response()->json($productos);
     }
     public function show($id)
@@ -114,5 +113,25 @@ class ProductoController extends Controller
         $producto = Producto::findOrFail($id);
         $producto->delete();
         return response()->json(['message' => 'Producto eliminado exitosamente.']);
+    }
+    public function getProductosBajoPrecioTienda(Request $request){
+        $validator = Validator::make($request->all(), [
+            'mi_latitud' => 'required|numeric',
+            'mi_longitud' => 'required|numeric',
+            'id_producto' => 'required|string|max:255',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+        $user = auth()->user();
+        $resultados = Producto::listaBajoPrecioTienda(
+            $user->id,
+            $request->mi_latitud,
+            $request->mi_longitud,
+            $request->id_producto
+        );
+
+        return response()->json($resultados);
+
     }
 }
