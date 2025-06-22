@@ -15,7 +15,7 @@ class Tienda extends Model
     ];
     public function ubicacion()
     {
-        return $this->belongsTo(Ubicacion::class, 'id_ubicacion');
+        return $this->hasOne(Ubicacion::class, 'id_tienda');
     }
 
     public function getUbicacion(){
@@ -28,5 +28,10 @@ class Tienda extends Model
             'longitud' => $ubicacion->longitud,
             'direccion' => $ubicacion->direccion,
         ];
+    }
+    // OPCIONAL: si quieres acceder desde Tienda al User dueño
+    public function usuario()
+    {
+        return $this->belongsTo(User::class, 'id_usuario');
     }
 }

@@ -30,4 +30,9 @@ class UsuarioProducto extends Model
     {
         return $this->hasMany(HistorialProducto::class, 'id_usuario_producto');
     }
+    // RELACIÓN MANUAL: conseguir tienda a partir del usuario
+    public function tienda()
+    {
+        return $this->hasOne(Tienda::class, 'id_usuario', 'id_usuario');
+    }
 }

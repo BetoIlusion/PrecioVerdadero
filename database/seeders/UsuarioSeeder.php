@@ -5,6 +5,9 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\User;
+use App\Models\Tienda;
+use App\Models\Ubicacion;
+use App\Models\UsuarioProducto;
 
 class UsuarioSeeder extends Seeder
 {
@@ -29,36 +32,49 @@ class UsuarioSeeder extends Seeder
                 'email' => 'tienda_c@gmail.com',
                 'password' => bcrypt('123456789'),
             ],
+            [
+                'name' => 'tienda D',
+                'email' => 'tienda_d@gmail.com',
+                'password' => bcrypt('123456789'),
+            ]
         ];
+
+        // Coordenadas base para todos (p. ej., una ciudad central)
+        // Coordenadas de la Plaza 24 de Septiembre, Santa Cruz de la Sierra, Bolivia
+        $baseLat = -17.783274;
+        $baseLng = -63.182132;
 
         foreach ($mercaderes as $mercader) {
             $user = User::create($mercader);
             $user->assignRole('mercader');
-            // Crear la tienda asociada al usuario
-            $tienda = \App\Models\Tienda::create([
+
+            $tienda = Tienda::create([
                 'nombre' => $user->name,
                 'tipo' => 'mercader',
                 'id_usuario' => $user->id,
             ]);
-            // Base para ubicaciones cercanas
-            $baseLat = 19.432608 + (mt_rand(-10, 10) / 10000);
-            $baseLng = -99.133209 + (mt_rand(-10, 10) / 10000);
-            // Ubicación principal
-            \App\Models\Ubicacion::create([
-                'latitud' => $baseLat,
-                'longitud' => $baseLng,
-                'direccion' => 'Ubicación principal de ' . $user->name,
+
+            // Generar ubicación aleatoria cercana (~3 km máximo)
+            $randomOffsetLat = (mt_rand(-15000, 15000) / 1000000); // ±0.015
+            $randomOffsetLng = (mt_rand(-15000, 15000) / 1000000); // ±0.015
+
+            $lat = $baseLat + $randomOffsetLat;
+            $lng = $baseLng + $randomOffsetLng;
+
+            Ubicacion::create([
+                'latitud' => $lat,
+                'longitud' => $lng,
+                'direccion' => 'Ubicación aproximada de ' . $user->name,
                 'id_tienda' => $tienda->id,
             ]);
-            // Ubicaciones secundarias cercanas
-            for ($i = 0; $i < 2; $i++) {
-                \App\Models\Ubicacion::create([
-                    'latitud' => $baseLat + (mt_rand(-5, 5) / 10000),
-                    'longitud' => $baseLng + (mt_rand(-5, 5) / 10000),
-                    'direccion' => 'Ubicación secundaria ' . ($i + 1) . ' de ' . $user->name,
-                    'id_tienda' => $tienda->id,
-                ]);
-            }
+
+            UsuarioProducto::create([
+                'id_usuario' => $user->id,
+                'id_producto' => 1, // Asignar un producto por defecto
+                'id_estado' => 1, // Asignar estado activo
+                'precio' => rand(10, 100), // Precio aleatorio entre 10 y 100
+                'existe' => true, // Marcar como existente
+            ]);
         }
     }
 }

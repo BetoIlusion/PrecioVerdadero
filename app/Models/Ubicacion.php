@@ -18,5 +18,4 @@ class Ubicacion extends Model
     {
         return $this->belongsTo(Tienda::class, 'id_tienda');
     }
-
 }

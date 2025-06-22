@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('ubicacions', function (Blueprint $table) {
             $table->id();
-            $table->integer('latitud');
-            $table->integer('longitud');
+            $table->double('latitud');
+            $table->double('longitud');
             $table->string('direccion');
             $table->unsignedBigInteger('id_tienda')->nullable();
             

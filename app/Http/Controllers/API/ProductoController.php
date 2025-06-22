@@ -118,18 +118,18 @@ class ProductoController extends Controller
         $validator = Validator::make($request->all(), [
             'mi_latitud' => 'required|numeric',
             'mi_longitud' => 'required|numeric',
-            'id_producto' => 'required|string|max:255',
+            'id_producto' => 'required|exists:productos,id',
         ]);
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
         $user = auth()->user();
         $resultados = Producto::listaBajoPrecioTienda(
-            $user->id,
             $request->mi_latitud,
             $request->mi_longitud,
             $request->id_producto
         );
+        return $resultados;
 
         return response()->json($resultados);
 

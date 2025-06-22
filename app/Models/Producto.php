@@ -52,13 +52,16 @@ class Producto extends Model
     {
         return $this->hasMany(UsuarioProducto::class, 'id_producto');
     }
-    public function listaBajoPrecioTienda($id, $mi_latitud, $mi_longitud, $id_producto)
+    public static function listaBajoPrecioTienda($mi_latitud, $mi_longitud, $id_producto)
     {
         // Traer los UsuarioProducto (mercaderes) con el producto disponible
         $usuarioProductos = UsuarioProducto::where('id_producto', $id_producto)
             ->where('existe', true)
             ->with(['tienda.ubicacion'])
             ->get();
+        if ($usuarioProductos->isEmpty()) {
+            return []; // No hay productos disponibles
+        }
 
         // Mapear para agregar precio y distancia
         $result = $usuarioProductos->map(function ($usuarioProducto) use ($mi_latitud, $mi_longitud) {
@@ -70,7 +73,7 @@ class Producto extends Model
                 $theta = $mi_longitud - $ubicacion->longitud;
                 $distancia = rad2deg(acos(
                     sin(deg2rad($mi_latitud)) * sin(deg2rad($ubicacion->latitud)) +
-                    cos(deg2rad($mi_latitud)) * cos(deg2rad($ubicacion->latitud)) * cos(deg2rad($theta))
+                        cos(deg2rad($mi_latitud)) * cos(deg2rad($ubicacion->latitud)) * cos(deg2rad($theta))
                 )) * 111.13384; // Aproximación km
             }
             return [
@@ -91,6 +94,4 @@ class Producto extends Model
 
         return $result;
     }
-
-
 }
