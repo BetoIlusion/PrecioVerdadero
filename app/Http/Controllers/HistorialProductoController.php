@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\HistorialProducto;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class HistorialProductoController extends Controller
 {
@@ -11,7 +13,8 @@ class HistorialProductoController extends Controller
      */
     public function index()
     {
-        //
+        $Historial = HistorialProducto::all();
+        return response()->json($Historial);
     }
 
     /**
@@ -27,6 +30,28 @@ class HistorialProductoController extends Controller
      */
     public function store(Request $request)
     {
+        $user = auth()->user();
+        if (!$user) {
+            return response()->json(['error' => 'Usuario no autenticado.'], 401);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'precio' => 'required|numeric',
+            'fecha' => 'required|date',
+            'fecha_hora' => 'required|date_format:Y-m-d H:i:s',
+            'id_usuario_producto' => 'required|exists:usuario_productos,id',
+            'id_estado_producto' => 'required|exists:estado_productos,id',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Datos inválidos.',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        $historialProducto = HistorialProducto::create($request->all());
+        return response()->json($historialProducto, 201);
         
     }
 
@@ -35,7 +60,7 @@ class HistorialProductoController extends Controller
      */
     public function show(string $id)
     {
-        //
+        
     }
 
     /**

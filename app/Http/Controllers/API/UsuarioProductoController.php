@@ -37,45 +37,68 @@ class UsuarioProductoController extends Controller
      */
     public function store(Request $request)
     {
-        $user = auth()->user();
-        if (!$user) {
-            return response()->json(['error' => 'Usuario no autenticado.'], 401);
-        }
+        try {
+            $user = auth()->user();
+            if (!$user) {
+                return response()->json(['error' => 'Usuario no autenticado.'], 401);
+            }
 
-        $validator = Validator::make($request->all(), [
-            'precio' => 'required',
-            'existe' => 'required|boolean',
-            'id_producto' => 'required|exists:productos,id',
-            'id_sub_tipo' => 'required|exists:sub_tipo_productos,id',
-        ]);
-        if ($validator->fails()) {
-            return response()->json([
-                'message' => 'Datos inválidos.',
-                'errors' => $validator->errors(),
-            ], 422);
-        }
-        if (UsuarioProducto::where('id', $user->id)
-            ->where('id_producto', $request->id_producto)
-            ->where('existe', false)
-            ->exists()
-        ) {
+            $validator = Validator::make($request->all(), [
+                'precio' => 'required',
+                'existe' => 'required|boolean',
+                'id_producto' => 'required|exists:productos,id',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'message' => 'Datos inválidos.',
+                    'errors' => $validator->errors(),
+                ], 422);
+            }
+
+            // Si ya existe el producto para el usuario con existe=false, solo actualizarlo a true
+            $usuarioProducto = UsuarioProducto::where('id_usuario', $user->id)
+                ->where('id_producto', $request->id_producto)
+                ->first();
+
+            if ($usuarioProducto) {
+                if (!$usuarioProducto->existe) {
+                    $usuarioProducto->existe = $request->existe;
+                    $usuarioProducto->precio = $request->precio;
+                    $usuarioProducto->id_estado = 1;
+                    $usuarioProducto->save();
+
+                    return response()->json([
+                        'message' => 'Producto restaurado exitosamente.',
+                        'usuario_producto' => $usuarioProducto
+                    ]);
+                } else {
+                    return response()->json([
+                        'message' => 'El producto ya existe para este usuario.',
+                        'usuario_producto' => $usuarioProducto
+                    ], 409);
+                }
+            }
+
+            // Si no existe, crearlo
             $usuarioProducto = new UsuarioProducto();
-            $usuarioProducto->existe = true;
+            $usuarioProducto->id_usuario = $user->id;
+            $usuarioProducto->id_producto = $request->id_producto;
+            $usuarioProducto->id_estado = 1;
+            $usuarioProducto->precio = $request->precio;
+            $usuarioProducto->existe = $request->existe;
             $usuarioProducto->save();
+
+            return response()->json([
+                'message' => 'Producto creado exitosamente.',
+                'usuario_producto' => $usuarioProducto
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Ocurrió un error al procesar la solicitud.',
+                'error' => $e->getMessage()
+            ], 500);
         }
-
-        $usuarioProducto = new Producto();
-        $usuarioProducto->id_usuario = $user->id;
-        $usuarioProducto->id_producto = $request->id_producto;
-        $usuarioProducto->id_sub_tipo = $request->id_sub_tipo;
-        $usuarioProducto->precio = $request->precio;
-        $usuarioProducto->existe = $request->existe;
-        $usuarioProducto->save();
-
-        return response()->json([
-            'message' => 'Producto creado exitosamente.',
-            'usuario_producto' => $usuarioProducto
-        ]);
     }
 
     /**
@@ -220,4 +243,42 @@ class UsuarioProductoController extends Controller
             'usuario_producto' => $usuarioProducto
         ]);
     }
+
+    public function allXusuario()
+    {
+        $user = auth()->user();
+        if (!$user) {
+            return response()->json(['error' => 'Usuario no autenticado.'], 401);
+        }
+
+        $usuarioProductos = UsuarioProducto::where('id_usuario', $user->id)
+            ->where('existe', true)
+            ->get();
+
+        if ($usuarioProductos->isEmpty()) {
+            return response()->json(['message' => 'No se encontraron productos para este usuario.'], 404);
+        }
+
+        return response()->json($usuarioProductos);
+    }
+
+    public function allXusuarioDetalle()
+    {
+        $user = auth()->user();
+        if (!$user) {
+            return response()->json(['error' => 'Usuario no autenticado.'], 401);
+        }
+
+        $usuarioProductos = UsuarioProducto::where('id_usuario', $user->id)
+            ->where('existe', true)
+            ->with(['producto', 'subTipoProducto'])
+            ->get();
+
+        if ($usuarioProductos->isEmpty()) {
+            return response()->json(['message' => 'No se encontraron productos para este usuario.'], 404);
+        }
+
+        return response()->json($usuarioProductos);
+    }
+
 }

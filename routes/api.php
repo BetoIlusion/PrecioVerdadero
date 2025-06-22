@@ -9,6 +9,10 @@ use App\Http\Controllers\API\SubTipoController as APISubTipoProductoController;
 use App\Http\Controllers\API\ProductoController as APIProductoController;
 use App\Models\TipoProducto;
 use App\Http\Controllers\API\UsuarioProductoController as APIUsuarioProductoController;
+use App\Http\Controllers\API\HistorialProductoController as APIHistorialProductoController;
+use App\Http\Controllers\API\PresupuestoController as APIPresupuestoController;
+use App\Http\Controllers\API\TiendaController as APITiendaController;
+
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -40,6 +44,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // USUARIO PRODUCTO
     // =============================
     Route::resource('/usuario-producto', APIUsuarioProductoController::class);
+    Route::get('/usuario-producto/usuario', [APIUsuarioProductoController::class, 'allXusuario'])->name('usuario-producto.index');
 
     //cambio de precio directamente
     Route::put('/usuario-producto/{id}/precio', [APIUsuarioProductoController::class, 'updatePrecio'])->name('usuario-producto.update-precio');
@@ -49,17 +54,26 @@ Route::middleware('auth:sanctum')->group(function () {
     // =============================
     // HISTORIAL DE PRODUCTOS
     // =============================
-   Route::resource('/usuario-producto/historial', APIUsuarioProductoController::class);
+    Route::resource('/usuario-producto/historial', APIUsuarioProductoController::class);
+
+    // ==============================
+    // PRESUPUESTOS
+    // ============================== 
+    Route::resource('/presupuesto', APIPresupuestoController::class);
+
+    // ==============================
+    // TIENDAS
+    // ==============================
+    Route::get('/tienda', [APITiendaController::class, 'getTienda'])->name('tienda.index');
+    Route::post('/tienda', [APITiendaController::class, 'createTienda'])->name('tienda.store');
+    Route::get('/tienda/ubicacion', [APITiendaController::class, 'getUbicacion'])->name('tienda.ubicacion');
+    Route::post('/tienda/ubicacion', [APITiendaController::class, 'createUbicacion'])->name('tienda.ubicacion.store');
+    Route::put('/tienda/ubicacion/{id}', [APITiendaController::class, 'updateUbicacion'])->name('tienda.ubicacion.update');
+    Route::put('/tienda/{id}', [APITiendaController::class, 'updateTienda'])->name('tienda.update');
+    Route::delete('/tienda/{id}', [APITiendaController::class, 'destroyTienda'])->name('tienda.destroy');
 
 });
 
-// Route::middleware('auth:sanctum')->prefix('tipo-producto')->group(function () {
-//     Route::get('/', [APITipoProductoController::class, 'index']);
-//     Route::post('/', [APITipoProductoController::class, 'store']);
-//     Route::get('/{id}', [APITipoProductoController::class, 'show']);
-//     Route::put('/{id}', [APITipoProductoController::class, 'update']);
-//     Route::delete('/{id}', [APITipoProductoController::class, 'destroy']);
-// });
 
 // Rutas de la API
 Route::prefix('auth')->group(function () {

@@ -12,8 +12,11 @@ class ProductoController extends Controller
 {
     public function index()
     {
-        $producto = Producto::all();
-        return response()->json($producto);
+        $productos = Producto::whereDoesntHave('usuarioProductos', function ($query) {
+            $query->where('existe', true);
+        })->get();
+
+        return response()->json($productos);
     }
     public function show($id)
     {

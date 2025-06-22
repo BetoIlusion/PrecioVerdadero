@@ -11,13 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('historial_productos', function (Blueprint $table) {
+        Schema::create('tiendas', function (Blueprint $table) {
             $table->id();
-            $table->decimal('precio', 8, 2);
-            $table->date('fecha');
-            $table->dateTime('fecha_hora');
-            $table->unsignedBigInteger('id_usuario_producto');
-            $table->unsignedBigInteger('id_estado_producto');
+            $table->string('nombre');
+            $table->string('tipo');
+            $table->unsignedBigInteger('id_usuario');
             $table->timestamps();
         });
     }
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('historial_productos');
+        Schema::dropIfExists('tiendas');
     }
 };

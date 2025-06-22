@@ -26,4 +26,8 @@ class UsuarioProducto extends Model
     public function existe(){
         return (bool) $this->existe;
     }
+    public function HistorialProductos()
+    {
+        return $this->hasMany(HistorialProducto::class, 'id_usuario_producto');
+    }
 }

@@ -13,6 +13,16 @@ class HistorialProducto extends Model
         'precio',
         'fecha',
         'fecha_hora',
+        'id_usuario_producto',
+        'id_estado_producto'
     ];
+    protected $casts = [
+        'fecha' => 'date',
+        'fecha_hora' => 'datetime',
+    ];
+    public function usuarioProducto()
+    {
+        return $this->belongsTo(UsuarioProducto::class, 'id_usuario_producto');
+    }
     
 }
