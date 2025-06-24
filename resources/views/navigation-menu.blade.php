@@ -26,7 +26,9 @@
                             {{ __('Inventario') }}
                         </x-nav-link>
                     @endif
-                    
+                     <x-nav-link href="{{ route('tienda.index') }}" :active="request()->routeIs('tienda')">
+    {{ __('Tienda') }}
+</x-nav-link>
                 </div>
             </div>
 

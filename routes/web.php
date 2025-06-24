@@ -7,6 +7,7 @@ use App\Http\Controllers\ProveedorController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SuperAdminController;
 use App\Http\Controllers\TipoProductoController;
+USE App\Http\Controllers\TiendaController;
 
 Route::get('/', function () {
     return view('welcome2');
@@ -42,14 +43,14 @@ Route::middleware([
     Route::prefix('admin')->middleware('role:Super Admin')->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.index');
         //INVENTARIO
-        // Route::get('/inventario', [InventarioController::class, 'index'])->name('admin.inventario');
+         Route::get('/inventario', [InventarioController::class, 'index'])->name('admin.inventario');
         // //TIPO PRODUCTO
-        // Route::get('/tipo-producto', [TipoProductoController::class, 'index'])->name('tipo-producto.index');
-        // Route::get('/tipo-producto/create', [TipoProductoController::class, 'create'])->name('tipo-producto.create');
-        // Route::post('/tipo-producto', [TipoProductoController::class, 'store'])->name('tipo-producto.store');
-        // Route::get('/tipo-producto/{id}/edit', [TipoProductoController::class, 'edit'])->name('tipo-producto.edit');
-        // Route::put('/tipo-producto/{id}', [TipoProductoController::class, 'update'])->name('tipo-producto.update');
-        // Route::delete('/tipo-producto/{id}', [TipoProductoController::class, 'destroy'])->name('tipo-producto.destroy');
+         Route::get('/tipo-producto', [TipoProductoController::class, 'index'])->name('tipo-producto.index');
+         Route::get('/tipo-producto/create', [TipoProductoController::class, 'create'])->name('tipo-producto.create');
+         Route::post('/tipo-producto', [TipoProductoController::class, 'store'])->name('tipo-producto.store');
+         Route::get('/tipo-producto/{id}/edit', [TipoProductoController::class, 'edit'])->name('tipo-producto.edit');
+         Route::put('/tipo-producto/{id}', [TipoProductoController::class, 'update'])->name('tipo-producto.update');
+         Route::delete('/tipo-producto/{id}', [TipoProductoController::class, 'destroy'])->name('tipo-producto.destroy');
         //SUBTIPO PRODUCTO
 
         //PRODUCTO
@@ -58,6 +59,16 @@ Route::middleware([
         Route::get('/productos/create', [SuperAdminController::class, 'create'])->name('super.inventario');
         Route::get('/subtipos/{id_tipo}', [SuperAdminController::class, 'getSubTipos']);
         Route::post('/productos', [SuperAdminController::class, 'store'])->name('productos.store');
+       
+        //TIENDA
+         //TIENDA
+ Route::get('/tiendas', [TiendaController::class, 'show'])->name('tienda.index');
+Route::post('/tienda', [TiendaController::class, 'store'])->name('tienda.store');
+Route::put('/tienda/{id}', [TiendaController::class, 'update'])->name('tienda.update');
+Route::delete('/tienda/{id}', [TiendaController::class, 'destroy'])->name('tienda.destroy');
+
+  
+  
     });
 
     //========================================================
