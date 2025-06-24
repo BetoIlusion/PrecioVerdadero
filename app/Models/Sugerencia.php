@@ -5,19 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class EstadoProducto extends Model
+class Sugerencia extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'estado_producto',
+        'sugerencia',
+        'id_usuario_producto',
+        'id_producto'
     ];
-    
     protected $hidden = [
         'created_at',
-        'updated_at'
+        'updated_at',
     ];
-    public function productos()
-    {
-        return $this->hasMany(Producto::class, 'id_estado');
+    public function prueba(){
+        
     }
+    
+    
 }

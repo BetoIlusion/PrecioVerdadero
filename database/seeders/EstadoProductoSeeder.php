@@ -15,10 +15,14 @@ class EstadoProductoSeeder extends Seeder
     public function run(): void
     {
         DB::table('estado_productos')->insert([
-            ['estado_producto' => 'actualizado', 'updated_date' => now()],
-            ['estado_producto' => 'desactualizado', 'updated_date' => now()],
-            ['estado_producto' => 'inhabilitado', 'updated_date' => now()],
-            ['estado_producto' => 'antiguo', 'updated_date' => now()],
+            ['estado_producto' => 'actualizado'],
+            ['estado_producto' => 'desactualizado'],
+            ['estado_producto' => 'inhabilitado'],
+            ['estado_producto' => 'antiguo'],
+            ['estado_producto' => 'sin cambios'],
+            
+
+
 
         ]);
     }

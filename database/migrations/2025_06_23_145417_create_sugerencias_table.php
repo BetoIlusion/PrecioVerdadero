@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('estado_productos', function (Blueprint $table) {
+        Schema::create('sugerencias', function (Blueprint $table) {
             $table->id();
-            // Para fechas en Laravel se usa timestamp o dateTime
-            // Se guarda automáticamente en formato Y-m-d H:i:s (ej: 2025-03-24 15:30:00)
-            $table->string('estado_producto')->unique();
-            // $table->boolean('estado')->default(true);
+            $table->string('sugerencia');
+            $table->unsignedBigInteger('id_usuario_producto');
+            $table->unsignedBigInteger('id_producto');
+        
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('estado_productos');
+        Schema::dropIfExists('sugerencias');
     }
 };
