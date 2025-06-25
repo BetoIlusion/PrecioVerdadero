@@ -23,7 +23,8 @@ class UsuarioProducto extends Model
     {
         return $this->belongsTo(User::class, 'id_usuario');
     }
-    public function existe(){
+    public function existe()
+    {
         return (bool) $this->existe;
     }
     public function HistorialProductos()
@@ -34,5 +35,9 @@ class UsuarioProducto extends Model
     public function tienda()
     {
         return $this->hasOne(Tienda::class, 'id_usuario', 'id_usuario');
+    }
+    public function producto()
+    {
+        return $this->belongsTo(Producto::class, 'id_producto');
     }
 }

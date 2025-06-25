@@ -6,14 +6,23 @@ use Illuminate\Http\Request;
 use App\Models\Producto;
 use Illuminate\Support\Facades\Auth;
 use App\Models\HistorialProducto;
+use App\Models\UsuarioProducto;
 
 class GraficasController extends Controller
 {
     public function index()
     {
         $user = auth()->user();
-        
-        $productos = Producto::all();
+
+        // Obtener los productos asociados al usuario autenticado y que estén activos
+        $usuarioProductos = UsuarioProducto::where('id_usuario', $user->id)
+            ->where('existe', true)
+            ->with('producto') // Asegúrate de tener la relación 'producto' en UsuarioProducto
+            ->get();
+
+        // Extraer los productos únicos
+        $productos = $usuarioProductos->pluck('producto')->unique('id')->values();
+
         return view('graficas.index', compact('productos'));
     }
     public function precios($producto_id)

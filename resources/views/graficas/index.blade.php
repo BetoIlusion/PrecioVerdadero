@@ -39,75 +39,80 @@
     </div>
 
     <!-- Chart.js CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        let precioChart;
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    let precioChart;
 
-        function inicializarGrafica(labels = [], precios = []) {
-            const ctx = document.getElementById('precioChart').getContext('2d');
+    function inicializarGrafica(labels = [], precios = []) {
+        const ctx = document.getElementById('precioChart').getContext('2d');
 
-            // Destroy existing chart if it exists
-            if (precioChart) {
-                precioChart.destroy();
-            }
+        // Destroy existing chart if it exists
+        if (precioChart) {
+            precioChart.destroy();
+        }
 
-            precioChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Precio a través del tiempo',
-                        data: precios,
-                        backgroundColor: 'rgba(75, 192, 192, 0.6)',
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            title: {
-                                display: true,
-                                text: 'Precio'
-                            }
-                        },
-                        x: {
-                            title: {
-                                display: true,
-                                text: 'Fecha y Hora'
-                            }
+        precioChart = new Chart(ctx, {
+            type: 'line', // Changed from 'bar' to 'line'
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Precio a través del tiempo',
+                    data: precios,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)', // Slightly transparent fill for the line
+                    borderColor: 'rgba(75, 192, 192, 1)', // Solid line color
+                    borderWidth: 2, // Thicker line for visibility
+                    fill: true, // Fills the area under the line
+                    tension: 0.4, // Adds smoothness to the line (adjust between 0 and 1)
+                    pointBackgroundColor: 'rgba(75, 192, 192, 1)', // Color for data points
+                    pointRadius: 4, // Size of data points
+                    pointHoverRadius: 6 // Larger points on hover
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Precio'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Fecha y Hora'
                         }
                     }
                 }
-            });
-        }
-
-        function actualizarGrafica() {
-            const productoId = document.getElementById('productoSelect').value;
-
-            if (!productoId) {
-                inicializarGrafica(); // Initialize empty chart
-                return;
             }
+        });
+    }
 
-            // Fetch price history via AJAX
-            fetch(`/graficas/precios/${productoId}`)
-                .then(response => response.json())
-                .then(data => {
-                    inicializarGrafica(data.labels, data.precios);
-                })
-                .catch(error => {
-                    console.error('Error fetching price history:', error);
-                    inicializarGrafica(); // Initialize empty chart on error
-                });
+    function actualizarGrafica() {
+        const productoId = document.getElementById('productoSelect').value;
+
+        if (!productoId) {
+            inicializarGrafica(); // Initialize empty chart
+            return;
         }
 
-        // Initialize empty chart on page load
-        document.addEventListener('DOMContentLoaded', () => {
-            inicializarGrafica();
-        });
-    </script>
+        // Fetch price history via AJAX
+        fetch(`/graficas/precios/${productoId}`)
+            .then(response => response.json())
+            .then(data => {
+                inicializarGrafica(data.labels, data.precios);
+            })
+            .catch(error => {
+                console.error('Error fetching price history:', error);
+                inicializarGrafica(); // Initialize empty chart on error
+            });
+    }
+
+    // Initialize empty chart on page load
+    document.addEventListener('DOMContentLoaded', () => {
+        inicializarGrafica();
+    });
+</script>
 </x-app-layout>
