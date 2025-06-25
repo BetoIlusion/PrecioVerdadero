@@ -99,7 +99,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/super/dashboard', [SuperAdminController::class, 'index'])->name('super.dashboard');
 
     // vista CLIENTE
-    Route::get('/app',[DashboardController::class,'indexCliente'])->name('download.app');
+    Route::get('/app',[DashboardController::class,'linkApk'])->name('download.app');
 
 
     // ====================

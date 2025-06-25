@@ -25,7 +25,10 @@ use Illuminate\Support\Facades\Http;
 class DashboardController extends Controller
 {
     // En app/Http/Controllers/DashboardController.php
-
+    public function linkApk()
+    {
+        return redirect()->away('https://drive.google.com/drive/folders/191OrE3BQFsW0_ox2QBCRZJtKsebAzqa8?usp=sharing');
+    }
     public function index()
     {
 
