@@ -146,7 +146,7 @@ public function promediar($id)
     // Este código no se ejecutará por el dd()
     $promedio = round($precios->avg(), 2);
 
-    dd('Promedio calculado: ' . $promedio);
+    
     $usuarioProducto->precio = $promedio;
     $usuarioProducto->save();
 

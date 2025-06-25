@@ -29,7 +29,6 @@ public function index()
     $productos = $user->usuarioProductos()->with('producto')->get();
 
     // 2. Volvemos a depurar
-    dd($productos);
 
     return view('dashboard', compact('productos'));
 }

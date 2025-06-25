@@ -19,7 +19,32 @@
                     <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    @if (Auth::user()->hasRole('mercader'))
+
+    <!-- <input type="text" id="mensaje" placeholder="Escribe algo...">
+    <button onclick="enviar()">Enviar</button>
+
+    <script>
+function enviar() {
+    const mensaje = document.getElementById('mensaje').value;
+
+    fetch('/consultar-gemini', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        },
+        body: JSON.stringify({ message: mensaje })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log("Mensaje enviado:", data.mensaje_enviado);
+        console.log("Respuesta de Gemini:", data.respuesta);
+    })
+    .catch(error => console.error("Error:", error));
+}
+</script> -->
+
+              @if (Auth::user()->hasRole('mercader'))
                     <x-nav-link href="{{ route('graficas.index') }}" :active="request()->routeIs('graficas.index')">
                         {{ __('Graficas') }}
                     </x-nav-link>
@@ -30,9 +55,12 @@
                         </x-nav-link>
                     @if (Auth::user()->hasRole('Super Admin'))
                         <x-nav-link href="{{ route('admin.inventario') }}" :active="request()->routeIs('admin.inventario')">
-                            {{ __('Inventario') }}
+                            {{ __('Producto') }}
                         </x-nav-link>
                     @endif
+                     <x-nav-link href="{{ route('tienda.index') }}" :active="request()->routeIs('.inventario')">
+                            {{ __('Tienda') }}
+                        </x-nav-link>
                     
                 </div>
             </div>

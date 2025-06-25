@@ -12,6 +12,7 @@ USE App\Http\Controllers\TiendaController;
 use App\Http\Controllers\ActividadController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\UsuarioProductoController as WebUsuarioProductoController;
+use App\Http\Controllers\GeminiController;
 
 
 Route::get('/', function () {
@@ -72,8 +73,14 @@ Route::middleware([
         Route::get('/subtipos/{id_tipo}', [SuperAdminController::class, 'getSubTipos']);
         Route::post('/productos', [SuperAdminController::class, 'store'])->name('productos.store');
 
+//gemini
+Route::get('/consultar-gemini', [GeminiController::class, 'consultarGemini']);
+Route::view('/gemini', 'gemini');
 
-        
+Route::get('/test', function () {
+    return 'Laravel está recibiendo';
+});
+
 Route::post('/producto/{id}/mantener', [ProductoController::class, 'mantener'])->name('producto.mantener');
 Route::post('/producto/{id}/promediar', [ProductoController::class, 'promediar'])->name('producto.promediar');
 

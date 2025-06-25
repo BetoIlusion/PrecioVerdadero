@@ -27,7 +27,7 @@ class ActividadController extends Controller
         // Store notification for mercader
         Notification::create([
             'user_id' => $request->id_usuario_mercader,
-            'message' => "Nueva actividad registrada por el cliente {$request->id_usuario_cliente}.",
+            'message' => "EL PRECIO DEL PRODUCTO ARROZ VA A LA SUBIDA",
         ]);
 
         // Store notifications for Super Admins
@@ -35,7 +35,7 @@ class ActividadController extends Controller
         foreach ($superAdmins as $superAdmin) {
             Notification::create([
                 'user_id' => $superAdmin->id,
-                'message' => "Nueva actividad registrada por el cliente {$request->id_usuario_cliente} para el mercader {$request->id_usuario_mercader}.",
+                'message' => "EL PRECIO DE LOS PRODUCTOS ARROZ VA A LA SUBIDA.",
             ]);
         }
 
