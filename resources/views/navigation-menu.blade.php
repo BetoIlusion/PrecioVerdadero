@@ -9,9 +9,9 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
+                    {{-- <a href="{{ route('dashboard') }}">
                         <x-application-mark class="block h-9 w-auto" />
-                    </a>
+                    </a> --}}
                 </div>
 
                 <!-- Navigation Links -->
@@ -19,8 +19,11 @@
                     <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    <x-nav-link href="{{ route('graficas.index') }}" :active="request()->routeIs('graficas.index')">
+                        {{ __('Graficas') }}
+                    </x-nav-link>
                     <!-- Mostrar el enlace de Inventario solo si el usuario tiene el rol 'proveedor' -->
-                    @if (Auth::user()->hasRole('proveedor'))
+                    {{-- @if (Auth::user()->hasRole('proveedor'))
                         <x-nav-link href="{{ route('proveedor.inventario') }}" :active="request()->routeIs('inventario')">
                             {{ __('Inventario') }}
                         </x-nav-link>
@@ -30,9 +33,7 @@
                             {{ __('Inventario') }}
                         </x-nav-link>
                     @endif
-                     <x-nav-link href="{{ route('tienda.index') }}" :active="request()->routeIs('tienda')">
-    {{ __('Tienda') }}
-</x-nav-link>
+                    
                 </div>
             </div>
 

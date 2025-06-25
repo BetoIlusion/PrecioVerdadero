@@ -80,7 +80,7 @@
             <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-12">
                
                 <!-- Card Azul -->
-                <a href="{{ route('register', ['tipo' => 'proveedor']) }}" class="card-hover card-glow transition-all duration-300 ease-in-out">
+                <a href="{{ route('register', ['tipo' => 'mercader']) }}" class="card-hover card-glow transition-all duration-300 ease-in-out">
                     <div class="bg-blue-600 rounded-xl p-6 text-white h-64 flex flex-col relative overflow-hidden">
                         <h2 class="text-2xl font-semibold mb-3">Mercader</h2>
                         <p class="mb-4 flex-grow">Ingresa tus productos y refleja el valor verdadero en el mercado</p>

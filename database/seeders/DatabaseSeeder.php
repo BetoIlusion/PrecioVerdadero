@@ -24,8 +24,8 @@ class DatabaseSeeder extends Seeder
             EstadoProductoSeeder::class,
             ProductoSeeder::class,
             TipoActividadSeeder::class,
-
             UsuarioSeeder::class,
+            HistorialProductoSeeder::class,
         ]);
         // $user = \App\Models\User::factory()->create([
         //     'name' => 'edberto',

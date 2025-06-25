@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\UsuarioProducto;
+use App\Models\Estado;
+use App\Models\Sugerencia;
 
 class UsuarioProductoController extends Controller
 {
@@ -11,7 +14,17 @@ class UsuarioProductoController extends Controller
      */
     public function index()
     {
-        //
+        $user = auth()->user();
+        $opciones = UsuarioProducto::where('id', $user->id)
+            ->where('id_estado', 4)
+            ->with([
+                'estado:id,nombre',
+                'producto',
+                'sugerencia:id,id_usuario_estado,usuario_producto_id'
+            ])
+            ->get();
+        
+        
     }
 
     /**
