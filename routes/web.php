@@ -21,13 +21,12 @@ Route::middleware([
 
     Route::get('/dashboard', function () {
         $user = auth()->user();
-
         if ($user->hasRole('Super Admin')) {
             return redirect()->route('super.dashboard');
         } elseif ($user->hasRole('mercader')) {
-            return view('dashboard-mercader');
+            return app(DashboardController::class)->index();
         } elseif ($user->hasRole('cliente')) {
-            return  view('dashboard-cliente');
+            return view('dashboard-cliente');
         }
 
         return abort(403, 'Acceso no autorizado'); // En caso de no tener un rol válido
@@ -38,7 +37,7 @@ Route::middleware([
     Route::get('/graficas/precios/{producto_id}', [App\Http\Controllers\GraficasController::class, 'precios'])->name('graficas.precios');
 
     //VISTA INVENTARIO
-    Route::get('/inventario', [GraficasController::class, 'index'])->name('graficas.index');
+    Route::get('/inventario', [InventarioController::class, 'index'])->name('inventario.index');
 
 
 

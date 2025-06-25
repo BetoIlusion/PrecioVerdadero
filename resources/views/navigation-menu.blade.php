@@ -16,9 +16,12 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                     @if (Auth::user()->hasRole('mercader'))
-                    <x-nav-link href="{{ route('graficas.index') }}" :active="request()->routeIs('graficas.index')">
-                        {{ __('Graficas') }}
-                    </x-nav-link>
+                        <x-nav-link href="{{ route('graficas.index') }}" :active="request()->routeIs('graficas.index')">
+                            {{ __('Graficas') }}
+                        </x-nav-link>
+                        <x-nav-link href="{{ route('inventario.index') }}" :active="request()->routeIs('inventario.index')">
+                            {{ __('Inventario') }}
+                        </x-nav-link>
                     @endif
                     <!-- Mostrar el enlace de Inventario solo si el usuario tiene el rol 'proveedor' -->
                     {{-- @if (Auth::user()->hasRole('proveedor'))
@@ -27,11 +30,9 @@
                         </x-nav-link>
                     @endif
                     @if (Auth::user()->hasRole('Super Admin'))
-                        <x-nav-link href="{{ route('admin.inventario') }}" :active="request()->routeIs('admin.inventario')">
-                            {{ __('Inventario') }}
-                        </x-nav-link>
+
                     @endif --}}
-                    
+
                 </div>
             </div>
 
