@@ -16,39 +16,21 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 
+
 class DashboardController extends Controller
 {
-  public function index()
-    {
-        $user = auth()->user();
-        $productos = $user->usuarioProductos()->with(['producto', 'historiales'])->get();
+  // En app/Http/Controllers/DashboardController.php
 
-        // Depurar y calcular promedios, filtrar solo los con producto válido
-        foreach ($productos as $usuarioProducto) {
-            $producto = $usuarioProducto->producto;
-            $historiales = $usuarioProducto->historiales;
-            $promedio = $historiales->isNotEmpty() ? $historiales->avg('precio') : 0;
+public function index()
+{
+    $user = auth()->user();
 
-            if (!$producto) {
-                Log::warning("UsuarioProducto ID: {$usuarioProducto->id} no tiene producto asociado (id_producto: {$usuarioProducto->id_producto})");
-            } else {
-                Log::info("UsuarioProducto ID: {$usuarioProducto->id}, Producto: {$producto->nombre}, Historiales count: {$historiales->count()}, Promedio: {$promedio}");
-            }
+    // 1. Ahora añadimos with('producto') para cargar la relación
+    $productos = $user->usuarioProductos()->with('producto')->get();
 
-            // Asignar el promedio como atributo dinámico
-            $usuarioProducto->promedio = $promedio;
-        }
+    // 2. Volvemos a depurar
+    dd($productos);
 
-        // Opcional: Filtrar solo los con producto válido (descomenta si lo necesitas)
-        // $productos = $productos->filter(function ($usuarioProducto) {
-        //     return $usuarioProducto->producto !== null;
-        // });
-
-        return view('dashboard', compact('productos'));
-    }
-
-    public function create()
-    {
-        return view('superadmin.producto.create');
-    }
+    return view('dashboard', compact('productos'));
 }
+}   

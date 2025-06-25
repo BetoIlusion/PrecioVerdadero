@@ -33,6 +33,7 @@ class SuperAdminController extends Controller
             Log::error('Error fetching products: ' . $e->getMessage());
             return redirect()->back()->with('error', 'Error al cargar los productos.');
         }
+        
     }
    
     public function getSubTipos($id_tipo)
