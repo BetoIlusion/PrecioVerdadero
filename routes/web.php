@@ -108,4 +108,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/usuario-producto', WebUsuarioProductoController::class);
 
     Route::post('/usuario-producto/actualizar', [ProductoController::class, 'actualizarEstado'])->name('usuario-producto.actualizar');
+    Route::post('/usuario-producto/{id}/mantener', [ProductoController::class, 'mantener'])->name('usuario-producto.mantener');
+    Route::post('/usuario-producto/{id}/promediar', [ProductoController::class, 'promediar'])->name('usuario-producto.promediar');
+    Route::get('/usuario-producto/{id}/modificar', [ProductoController::class, 'modificar'])->name('producto.modificar');
 });

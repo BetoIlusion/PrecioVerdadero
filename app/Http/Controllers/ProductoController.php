@@ -162,7 +162,17 @@ class ProductoController extends Controller
 
         return back()->with('success', 'Producto actualizado sin cambios de precio.');
     }
-
+    public function modificar($id)
+    {
+        try {
+            $producto = Producto::findOrFail($id);
+            $estados = EstadoProducto::all();
+            return view('entidades.productos.editar', compact('producto', 'estados'));
+        } catch (\Exception $e) {
+            Log::error('Error fetching product for edit: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Error al cargar el producto para editar.');
+        }
+    }
 
 
 }

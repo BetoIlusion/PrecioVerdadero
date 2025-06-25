@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('sugerencia');
             $table->unsignedBigInteger('id_usuario_producto');
             $table->unsignedBigInteger('id_producto');
-        
+            $table->boolean('existe')->default('true');
             $table->timestamps();
         });
     }

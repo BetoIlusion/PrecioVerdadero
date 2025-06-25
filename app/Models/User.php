@@ -11,7 +11,7 @@ use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use App\Models\UsuarioProducto;
-use App\Models\Notification;    
+use App\Models\Notification;
 
 class User extends Authenticatable
 {
@@ -68,14 +68,13 @@ class User extends Authenticatable
         return $this->hasMany(UsuarioProducto::class, 'id_usuario');
     }
 
-     public function notifications()
+    public function notifications()
     {
         return $this->hasMany(Notification::class, 'user_id');
     }
 
     public function usuarioProductos()
-{
-    return $this->hasMany(App\Models\UsuarioProducto::class, 'id_usuario');
-}
-
+    {
+        return $this->hasMany(UsuarioProducto::class, 'id_usuario');
+    }
 }

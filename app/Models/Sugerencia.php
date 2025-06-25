@@ -10,6 +10,7 @@ class Sugerencia extends Model
     use HasFactory;
     protected $fillable = [
         'sugerencia',
+        'existe',
         'id_usuario_producto',
         'id_producto'
     ];

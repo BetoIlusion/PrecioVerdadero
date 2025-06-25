@@ -47,89 +47,66 @@
         </div>
     </div>
     <!-- Productos asociados al usuario -->
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-2xl sm:rounded-lg">
-                <!-- Lista de productos -->
-                <div class="overflow-x-auto">
-                    <table class="min-dw-full divide-y divide-gray-200 shadow-lg">
-                        <thead style="background-color: #5271ff;">
-                            <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider w-1/12">ID</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider w-2/12">Nombre</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider w-2/12">Marca</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider w-2/12">Disponibilidad</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider w-2/12">Acciones</th>
+    <!-- ...existing code... -->
+<div class="py-12">
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="bg-white overflow-hidden shadow-2xl sm:rounded-lg">
+            <!-- Lista de productos -->
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200 shadow-lg">
+                    <thead class="bg-gradient-to-r from-indigo-500 to-blue-500">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-bold text-white uppercase tracking-wider w-2/12">Nombre</th>
+                            <th class="px-6 py-3 text-center text-xs font-bold text-white uppercase tracking-wider w-2/12">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                        @forelse($productos as $index => $producto)
+                            <tr class="{{ $index % 2 === 0 ? 'bg-white' : 'bg-blue-50' }} hover:bg-blue-100 transition-colors duration-200">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 w-2/12">
+                                    {{ $producto->producto ? $producto->producto->nombre : 'Producto no encontrado' }}
+                                </td>
+                                <td class="px-6 py-4 w-2/12">
+                                    <div class="flex flex-wrap gap-2 justify-center items-center">
+                                        <!-- Modificar -->
+                                        <form action="{{ route('producto.modificar', $producto->id) }}" method="POST" class="inline">
+                                            @csrf
+                                            <input type="number" name="precio" step="0.01" value="{{ $producto->precio }}" class="w-20 px-2 py-1 border rounded" required>
+                                            <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1 rounded shadow transition duration-150" title="Modificar">
+                                                Modificar
+                                            </button>
+                                        </form>
+                                        <!-- Mantener -->
+                                        <form action="{{ route('producto.mantener', $producto->id) }}" method="POST" class="inline">
+                                            @csrf
+                                            <button type="submit" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded shadow transition duration-150" title="Mantener">
+                                                Mantener
+                                            </button>
+                                        </form>
+                                        <!-- Promediar -->
+                                        <form action="{{ route('producto.promediar', $producto->id) }}" method="POST" class="inline">
+                                            @csrf
+                                            <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded shadow transition duration-150" title="Promediar">
+                                                Promediar
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
                             </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-200">
-                            @forelse($productos as $index => $producto)
-                                <tr class="{{ $index % 2 === 0 ? 'bg-white' : 'bg-[#d4daf7]' }} hover:bg-gray-100">
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 w-1/12">{{ $producto->id }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 w-2/12">
-                                        @if ($producto)
-                                            {{ $producto->nombre }}
-                                        @else
-                                            <span class="text-red-500">Producto no encontrado (ID: {{ $producto->id_producto }})</span>
-                                        @endif
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 w-2/12">
-                                        @if ($producto)
-                                            {{ $producto->marca ?? 'N/A' }}
-                                        @else
-                                            N/A
-                                        @endif
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 w-2/12">
-                                        @if ($producto)
-                                            {{ $producto->disponibilidad ? 'Disponible' : 'No disponible' }}
-                                        @else
-                                            Desconocido
-                                        @endif
-                                    </td>
-                                    <td class="px-6 py-4 text-sm font-medium w-2/12 text-right">
-                                        <x-button onclick="openModal({{ $producto->producto ? $producto->producto->toJson() : '{}' }})" class="bg-indigo-600 hover:bg-indigo-700 text-white mr-2">
-                                            Modificar
-                                        </x-button>
-                                        <!-- Botón Mantener -->
-                                        <form action="{{ route('producto.mantener', $producto->id) }}" method="POST" class="inline ml-2">
-                                            @csrf
-                                            <button type="submit" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded">Mantener</button>
-                                        </form>
-
-                                        @if ($producto->promedio >= 0)
-                                            <form action="{{ route('producto.promediar', $producto->id) }}" method="POST" class="inline ml-2">
-                                                @csrf
-                                                <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded">
-                                                    Promediar (Bs. {{ number_format($producto->promedio, 2) }})
-                                                </button>
-                                            </form>
-                                        @else
-                                            <span class="text-red-500">Sin historial</span>
-                                        @endif
-
-                                        <form action="{{ route('productos.destroy', $producto->id) }}" method="POST" class="inline-block">
-                                            @csrf
-                                            @method('DELETE')
-                                            <x-button type="submit" class="bg-red-600 hover:bg-red-700 text-white" onclick="return confirm('¿Estás seguro de eliminar este producto?')">
-                                                Eliminar
-                                            </x-button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="5" class="px-6 py-4 text-center text-sm text-gray-500">
-                                        No hay productos disponibles.
-                                    </td>
-                                </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-                </div>
+                        @empty
+                            <tr>
+                                <td colspan="2" class="px-6 py-4 text-center text-sm text-gray-500">
+                                    No hay productos disponibles.
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
+</div>
+<!-- ...existing code... -->
     <!-- Modal -->
     <div id="productModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden flex items-center justify-center z-50">
         <div class="bg-white p-6 rounded-lg shadow-lg w-11/12 md:w-1/2">
