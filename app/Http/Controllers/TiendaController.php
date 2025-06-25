@@ -9,6 +9,56 @@ use Illuminate\Support\Facades\Validator;
 
 class TiendaController extends Controller
 {
+
+    public function show()
+{
+    $user = auth()->user();
+    $tiendas = Tienda::where('id_usuario', $user->id)->get();
+    return view('tienda.index', compact('tiendas'));
+}
+
+public function store(Request $request)
+{
+    $request->validate([
+        'nombre' => 'required|string|max:255',
+        'tipo' => 'required|string|max:255',
+    ]);
+
+    Tienda::create([
+        'nombre' => $request->nombre,
+        'tipo' => $request->tipo,
+        'id_usuario' => auth()->id(),
+    ]);
+
+    return redirect()->route('tienda.index')->with('success', 'Tienda creada correctamente.');
+}
+public function update(Request $request, $id)
+{
+    $request->validate([
+        'nombre' => 'required|string|max:255',
+        'tipo' => 'required|string|max:255',
+    ]);
+
+    $tienda = Tienda::findOrFail($id);
+    $tienda->update([
+        'nombre' => $request->nombre,
+        'tipo' => $request->tipo,
+    ]);
+
+    return redirect()->route('tienda.index')->with('success', 'Tienda actualizada correctamente.');
+}
+
+public function destroy($id)
+{
+    $tienda = Tienda::findOrFail($id);
+    $tienda->delete();
+
+    return redirect()->route('tienda.index')->with('success', 'Tienda eliminada correctamente.');
+}
+
+//functions for 
+
+
     public function createTienda(Request $request)
     {
         $user = auth()->user();

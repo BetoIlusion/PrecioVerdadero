@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\UsuarioProducto;
+use App\Models\HistorialProducto;
 
 class Producto extends Model
 {
@@ -52,6 +54,7 @@ class Producto extends Model
     {
         return $this->hasMany(UsuarioProducto::class, 'id_producto');
     }
+    
     public static function listaBajoPrecioTienda($mi_latitud, $mi_longitud, $id_producto)
     {
         // Traer los UsuarioProducto (mercaderes) con el producto disponible
@@ -94,4 +97,20 @@ class Producto extends Model
 
         return $result;
     }
+
+    public function getPromedioPrecioAttribute()
+{
+    return \App\Models\HistorialProducto::whereHas('usuarioProducto', function ($query) {
+        $query->where('id_producto', $this->id);
+    })
+    ->where('updated_at', '>=', now()->subMinute()) // Filtra solo los últimos 1 minuto
+    ->avg('precio') ?? 0;
+}
+
+public function historiales()
+    {
+        return $this->hasMany(HistorialProducto::class, 'id_usuario_producto', 'id');
+    }
+
+
 }

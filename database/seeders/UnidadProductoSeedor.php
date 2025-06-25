@@ -14,9 +14,9 @@ class UnidadProductoSeedor extends Seeder
     public function run(): void
     {
         DB::table('unidad_productos')->insert([
-            ['unidad' => 'Kg 1', 'estado' => 'true'],
-            ['unidad' => 'Lt 2', 'estado' => 'true'],
-            ['unidad' => 'M 3', 'estado' => 'true']
+            ['unidad' => 'Kg 1', 'estado' => 1],
+            ['unidad' => 'Lt 2', 'estado' => 1],
+            ['unidad' => 'M 3', 'estado' => 1]
         ]);
     }
 }

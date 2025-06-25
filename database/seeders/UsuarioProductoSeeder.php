@@ -16,7 +16,7 @@ class UsuarioProductoSeeder extends Seeder
             [
                 'precio' => 38.00,
                 'existe' => true,
-                'id_usuario' => 2,
+                'id_usuario' => 1,
                 'id_producto' => 1,
                 'id_estado' => 1,
                 'created_at' => $now,
