@@ -126,29 +126,32 @@ class ProductoController extends Controller
 
             
         }}
-           public function promediar($id)
-    {
-        $usuarioProducto = UsuarioProducto::findOrFail($id);
-        $productoId = $usuarioProducto->id_producto;
+           
+public function promediar($id)
+{
+    $usuarioProducto = UsuarioProducto::findOrFail($id);
+    $productoId = $usuarioProducto->id_producto;
 
-        // Buscar precios de ese producto (de todos los usuarios) sin limitación de tiempo
-        $precios = HistorialProducto::whereHas('usuarioProducto', function ($query) use ($productoId) {
-            $query->where('id_producto', $productoId);
-        })
-        ->pluck('precio');
+    $precios = HistorialProducto::whereHas('usuarioProducto', function ($query) use ($productoId) {
+        $query->where('id_producto', $productoId);
+    })
+    ->pluck('precio');
 
-        if ($precios->count() === 0) {
-            return back()->with('error', 'No hay precios para este producto.');
-        }
-
-        $promedio = round($precios->avg(), 2);
-
-        // Actualiza el precio del producto del usuario con ese promedio
-        $usuarioProducto->precio = $promedio;
-        $usuarioProducto->save();
-
-        return back()->with('success', 'Precio actualizado con el promedio de todos los precios (Bs. ' . $promedio . ').');
+    if ($precios->count() === 0) {
+        return back()->with('error', 'No hay precios para este producto.');
     }
+
+
+
+    // Este código no se ejecutará por el dd()
+    $promedio = round($precios->avg(), 2);
+
+    dd('Promedio calculado: ' . $promedio);
+    $usuarioProducto->precio = $promedio;
+    $usuarioProducto->save();
+
+    return back()->with('success', 'Precio actualizado con el promedio de todos los precios (Bs. ' . $promedio . ').');
+}
 
     public function mantener($id)
     {
@@ -157,7 +160,7 @@ class ProductoController extends Controller
         // Actualiza el updated_at del producto
         $producto->touch();
 
-        // Actualiza el updated_at en la tabla historial_productos para los registros asociados
+        // Actualiza el updated_at en la tabla historial_productos para los regist  ros asociados
         HistorialProducto::where('id_usuario_producto', $id)->update(['updated_at' => now()]);
 
         return back()->with('success', 'Producto actualizado sin cambios de precio.');
