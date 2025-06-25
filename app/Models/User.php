@@ -65,4 +65,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(UsuarioProducto::class, 'id_usuario');
     }
+
+     public function notifications()
+    {
+        return $this->hasMany(Notification::class, 'user_id');
+    }
 }

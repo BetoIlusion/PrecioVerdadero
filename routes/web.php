@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SuperAdminController;
 use App\Http\Controllers\TipoProductoController;
 USE App\Http\Controllers\TiendaController;
+use App\Http\Controllers\ActividadController;
+use App\Http\Controllers\NotificationController;
 
 Route::get('/', function () {
     return view('welcome2');
@@ -60,6 +62,9 @@ Route::middleware([
         Route::get('/subtipos/{id_tipo}', [SuperAdminController::class, 'getSubTipos']);
         Route::post('/productos', [SuperAdminController::class, 'store'])->name('productos.store');
        
+Route::post('/productos', [ProductoController::class, 'store'])->name('productos.store');
+Route::put('/productos/{id}', [ProductoController::class, 'update'])->name('productos.update');
+Route::delete('/productos/{id}', [ProductoController::class, 'destroy'])->name('productos.destroy');
         //TIENDA
          //TIENDA
  Route::get('/tiendas', [TiendaController::class, 'show'])->name('tienda.index');
@@ -68,8 +73,14 @@ Route::put('/tienda/{id}', [TiendaController::class, 'update'])->name('tienda.up
 Route::delete('/tienda/{id}', [TiendaController::class, 'destroy'])->name('tienda.destroy');
 
   
-  
-    });
+//notificaciones
+Route::middleware('auth')->group(function () {
+    Route::post('/actividad', [ActividadController::class, 'store'])->name('actividad.store');
+    Route::post('/notification/{id}/read', [NotificationController::class, 'markAsRead'])->name('notification.markAsRead');
+    Route::delete('/notification/{id}', [NotificationController::class, 'destroy'])->name('notification.destroy');});  
+
+
+});
 
     //========================================================
     //         PROVEEDOR

@@ -76,5 +76,26 @@ class UsuarioSeeder extends Seeder
                 'existe' => true, // Marcar como existente
             ]);
         }
+
+    $clientes = [
+        [
+            'name' => 'cliente 1',
+            'email' => 'cliente1@gmail.com',
+            'password' => bcrypt('123456789'),
+        ],
+        [
+            'name' => 'cliente 2',
+            'email' => 'cliente2@gmail.com',
+            'password' => bcrypt('123456789'),
+        ]
+    ];
+
+    foreach ($clientes as $cliente) {
+        $user = User::create($cliente);
+        $user->assignRole('cliente');
+        // Puedes agregar lógica adicional si deseas que los clientes tengan ubicación o algo más
     }
+    }
+
+    
 }
