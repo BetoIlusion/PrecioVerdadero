@@ -10,6 +10,8 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use App\Models\UsuarioProducto;
+use App\Models\Notification;    
 
 class User extends Authenticatable
 {
@@ -70,4 +72,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Notification::class, 'user_id');
     }
+
+    public function usuarioProductos()
+{
+    return $this->hasMany(App\Models\UsuarioProducto::class, 'id_usuario');
+}
+
 }

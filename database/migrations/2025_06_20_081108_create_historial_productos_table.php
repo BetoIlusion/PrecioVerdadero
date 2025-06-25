@@ -18,7 +18,11 @@ return new class extends Migration
             $table->dateTime('fecha_hora');
             $table->unsignedBigInteger('id_usuario_producto');
             $table->unsignedBigInteger('id_estado_producto');
+            $table->foreign('id_usuario_producto')->references('id')->on('usuario_productos')->onDelete('cascade');
+$table->foreign('id_estado_producto')->references('id')->on('estado_productos')->onDelete('cascade');
+
             $table->timestamps();
+
         });
     }
 

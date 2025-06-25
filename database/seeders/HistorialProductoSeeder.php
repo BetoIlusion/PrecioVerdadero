@@ -12,12 +12,14 @@ class HistorialProductoSeeder extends Seeder
     /**
      * Run the database seeds.
      */
-    public function run(): void
+     public function run(): void
     {
         // Asegura reinicio de fecha para consistencia
-        HistorialProductoFactory::$fechaInicio = null;
+        HistorialProductoFactory::$fechaInicio = now();
 
-        // Genera 20 registros con fechas secuenciales
-        HistorialProducto::factory()->count(20)->create();
+        // Genera 20 registros apuntando a id_usuario_producto = 1
+        HistorialProducto::factory()->count(20)->create([
+            'id_usuario_producto' => 1,
+        ]);
     }
 }

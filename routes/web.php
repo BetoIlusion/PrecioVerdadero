@@ -69,6 +69,12 @@ Route::middleware([
         Route::get('/productos/create', [SuperAdminController::class, 'create'])->name('super.inventario');
         Route::get('/subtipos/{id_tipo}', [SuperAdminController::class, 'getSubTipos']);
         Route::post('/productos', [SuperAdminController::class, 'store'])->name('productos.store');
+
+
+        
+Route::post('/producto/{id}/mantener', [ProductoController::class, 'mantener'])->name('producto.mantener');
+Route::post('/producto/{id}/promediar', [ProductoController::class, 'promediar'])->name('producto.promediar');
+
        
 Route::post('/productos', [ProductoController::class, 'store'])->name('productos.store');
 Route::put('/productos/{id}', [ProductoController::class, 'update'])->name('productos.update');

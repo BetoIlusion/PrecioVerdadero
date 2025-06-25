@@ -14,7 +14,7 @@
                     </a> --}}
                 </div>
 
-                <!-- Navigation Links -->
+                <!-- Navigation Links                                                       -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
@@ -23,7 +23,7 @@
                         {{ __('Graficas') }}
                     </x-nav-link>
                     <!-- Mostrar el enlace de Inventario solo si el usuario tiene el rol 'proveedor' -->
-                    {{-- @if (Auth::user()->hasRole('proveedor'))
+             @if (Auth::user()->hasRole('proveedor'))
                         <x-nav-link href="{{ route('proveedor.inventario') }}" :active="request()->routeIs('inventario')">
                             {{ __('Inventario') }}
                         </x-nav-link>
