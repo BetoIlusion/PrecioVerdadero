@@ -43,6 +43,10 @@ Route::middleware([
 
 
 
+    //vista dashboard DASBOARD
+    Route::get('/super/dashboard', [SuperAdminController::class, 'index'])->name('super.dashboard');
+
+
     // ====================
     // PRODUCTO - USUARIO PRODUCTO
     // ====================
