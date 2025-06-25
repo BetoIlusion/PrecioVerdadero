@@ -44,6 +44,9 @@ Route::middleware([
 
     //VISTA INVENTARIO
     Route::get('/inventario', [GraficasController::class, 'index'])->name('graficas.index');
+        Route::get('/mercader/inventario', [GraficasController::class, 'index'])->name('mercader.index');
+        
+
 
     //las Rutas Dashboard no se tocan !!!!
     //========================================================

@@ -19,9 +19,11 @@
                     
 
                     <!-- Botón Estadísticas -->
+                       <a href="{{ route('productos.index') }}">
                     <x-button class="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow-md">
                         <span class="text-lg">Productos</span>
                     </x-button>
+                    </a>
 
                     <!-- Botón Detalles -->
                     <x-button class="w-full bg-green-600 hover:bg-green-700 text-white rounded-lg shadow-md">

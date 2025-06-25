@@ -25,11 +25,9 @@
                     </x-nav-link>
                     @endif
                     <!-- Mostrar el enlace de Inventario solo si el usuario tiene el rol 'proveedor' -->
-             @if (Auth::user()->hasRole('proveedor'))
-                        <x-nav-link href="{{ route('proveedor.inventario') }}" :active="request()->routeIs('inventario')">
+                        <x-nav-link href="{{ route('mercader.index') }}" :active="request()->routeIs('inventario')">
                             {{ __('Inventario') }}
                         </x-nav-link>
-                    @endif
                     @if (Auth::user()->hasRole('Super Admin'))
                         <x-nav-link href="{{ route('admin.inventario') }}" :active="request()->routeIs('admin.inventario')">
                             {{ __('Inventario') }}
