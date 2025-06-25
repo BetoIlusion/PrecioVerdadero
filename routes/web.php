@@ -26,9 +26,8 @@ Route::middleware([
             return redirect()->route('super.dashboard');
         } elseif ($user->hasRole('mercader')) {
             return view('dashboard-mercader');
-            return redirect()->route('mercader.dashboard');
         } elseif ($user->hasRole('cliente')) {
-            return redirect()->route('cliente.dashboard');
+            return  view('dashboard-cliente');
         }
 
         return abort(403, 'Acceso no autorizado'); // En caso de no tener un rol válido
@@ -37,7 +36,7 @@ Route::middleware([
     //VISTA GRAFICAS
     Route::get('/graficas', [GraficasController::class, 'index'])->name('graficas.index');
     Route::get('/graficas/precios/{producto_id}', [App\Http\Controllers\GraficasController::class, 'precios'])->name('graficas.precios');
-    
+
     //VISTA INVENTARIO
     Route::get('/inventario', [GraficasController::class, 'index'])->name('graficas.index');
 
@@ -45,6 +44,9 @@ Route::middleware([
 
     //vista dashboard DASBOARD
     Route::get('/super/dashboard', [SuperAdminController::class, 'index'])->name('super.dashboard');
+
+    // vista CLIENTE
+    Route::get('/app',[DashboardController::class,'indexCliente'])->name('download.app');
 
 
     // ====================

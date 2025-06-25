@@ -15,4 +15,8 @@ class DashboardController extends Controller
     {
         return view('superadmin.producto.create');
     }
+    public function indexCliente()
+    {
+        return redirect()->away('https://drive.google.com/drive/folders/191OrE3BQFsW0_ox2QBCRZJtKsebAzqa8?usp=sharing');
+    }
 }

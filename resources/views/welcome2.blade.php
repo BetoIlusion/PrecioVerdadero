@@ -98,9 +98,8 @@
                 <!-- Card Amarillo -->
                 <a href="{{ route('register', ['tipo' => 'cliente']) }}" class="card-hover card-glow transition-all duration-300 ease-in-out">
                     <div class="bg-yellow-500 rounded-xl p-6 text-gray-900 h-64 flex flex-col relative overflow-hidden">
-                        <h2 class="text-2xl font-semibold mb-3">Consumidor</h2>
-                        <p class="mb-4 flex-grow">Únete para que obtener las mejores recetas respecto a tu presupuesto
-                            que tengas disponible y ve el precio de tu producto en el mercado
+                        <h2 class="text-2xl font-semibold mb-3">Cliente</h2>
+                        <p class="mb-4 flex-grow">Únete para que obtener las mejores recetas , ve el precio de tu producto en el mercado
                         </p>
                         <div class="absolute bottom-4 right-4 bg-yellow-600 backdrop-blur-md p-2 rounded-full">
                             <svg class="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"
