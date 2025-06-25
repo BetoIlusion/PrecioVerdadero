@@ -4,10 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\HistorialProducto;
+use App\Models\User;
+use App\Models\Tienda;  
 
 class UsuarioProducto extends Model
 {
     use HasFactory;
+    protected $table = 'usuario_productos';
     protected $fillable = [
         'precio',
         'existe',
@@ -36,8 +40,16 @@ class UsuarioProducto extends Model
     {
         return $this->hasOne(Tienda::class, 'id_usuario', 'id_usuario');
     }
-    public function producto()
-    {
-        return $this->belongsTo(Producto::class, 'id_producto');
-    }
+ public function producto()
+{
+    return $this->belongsTo(Producto::class, 'id_producto');
+}
+
+// En app/Models/UsuarioProducto.php
+
+public function historiales()
+{
+    // CORRECTO Y EXPLÍCITO:
+    return $this->hasMany(HistorialProducto::class, 'id_usuario_producto', 'id');
+}
 }

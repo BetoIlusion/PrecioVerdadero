@@ -6,21 +6,36 @@ use Illuminate\Http\Request;
 use App\Models\UnidadProducto;
 use App\Models\TipoProducto;
 use App\Models\SubTipoProducto;
+use App\Models\Producto;
+use App\Models\EstadoProducto;
+use Illuminate\Support\Facades\Log;
+use App\Models\UsuarioProducto;
+
+
+use App\Models\Usuario; 
+use App\Models\Tienda;
+use App\Models\Ubicacion;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
+
+
 
 class SuperAdminController extends Controller
-{
-    public function index()
+{   
+  public function index(Request $request)
     {
-        return view('dashboard');
+        try {
+            $productos = Producto::all();
+            $estados = EstadoProducto::all();
+            $producto = $request->has('id') ? Producto::find($request->id) : null;
+            return view('dashboard', compact('productos', 'estados', 'producto'));
+        } catch (\Exception $e) {
+            Log::error('Error fetching products: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Error al cargar los productos.');
+        }
+        
     }
-    public function create()
-    {
-        $UnidadProducto = UnidadProducto::all();
-        //\Log::info('UnidadProducto::all() lista', ['UnidadProducto' => UnidadProducto::all()]);
-        $TipoProducto = TipoProducto::all();
-        //dd($TipoProducto);
-        return view('superadmin.producto.create', compact('UnidadProducto', 'TipoProducto'));
-    }
+   
     public function getSubTipos($id_tipo)
 {
     

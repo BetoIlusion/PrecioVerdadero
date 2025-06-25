@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\UsuarioProducto;
 
 class HistorialProducto extends Model
 {
@@ -20,9 +21,9 @@ class HistorialProducto extends Model
         'fecha' => 'date',
         'fecha_hora' => 'datetime',
     ];
-    public function usuarioProducto()
-    {
-        return $this->belongsTo(UsuarioProducto::class, 'id_usuario_producto');
-    }
+  public function usuarioProducto()
+{
+    return $this->belongsTo(UsuarioProducto::class, 'id_usuario_producto');
+}
     
 }

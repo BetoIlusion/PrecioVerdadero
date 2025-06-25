@@ -21,9 +21,9 @@ return new class extends Migration
             $table->timestamps();
 
             // Las claves foráneas se pueden agregar aquí directamente
-            // $table->foreign('id_usuario')->references('id')->on('users');
-            // $table->foreign('id_producto')->references('id')->on('productos');
-            // $table->foreign('id_estado')->references('id')->on('estado_productos');
+             $table->foreign('id_usuario')->references('id')->on('users');
+             $table->foreign('id_producto')->references('id')->on('productos');
+             $table->foreign('id_estado')->references('id')->on('estado_productos');
         });
     }
     /**
