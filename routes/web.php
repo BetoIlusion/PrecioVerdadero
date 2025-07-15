@@ -13,7 +13,11 @@ use App\Http\Controllers\ActividadController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\UsuarioProductoController as WebUsuarioProductoController;
 use App\Http\Controllers\GeminiController;
+use App\Http\Controllers\MLController;
 
+
+Route::get('/prediccion', [MLController::class, 'formulario'])->name('prediccion.formulario');
+Route::post('/prediccion', [MLController::class, 'consultar'])->name('prediccion.consultar');
 
 Route::get('/', function () {
     return view('welcome2');

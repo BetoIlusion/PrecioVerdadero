@@ -18,6 +18,13 @@ use Illuminate\Validation\Rules\RequiredIf;
 use Illuminate\Validation\Rules\RequiredUnless;
 use Illuminate\Validation\Rules\ProhibitedIf;
 use Illuminate\Validation\Rules\ProhibitedUnless;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Artisan;
+use App\Models\Notification;
 
 
 use App\Models\Usuario; 
@@ -29,7 +36,7 @@ use Illuminate\Support\Facades\Auth;
 
 class SuperAdminController extends Controller
 {   
-  public function index(Request $request)
+ public function index(Request $request)
     {
         try {
             $productos = Producto::all();
@@ -40,7 +47,7 @@ class SuperAdminController extends Controller
             Log::error('Error fetching products: ' . $e->getMessage());
             return redirect()->back()->with('error', 'Error al cargar los productos.');
         }
-        
+    
     }
    
     public function getSubTipos($id_tipo)

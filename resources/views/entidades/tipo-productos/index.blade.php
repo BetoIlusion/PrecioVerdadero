@@ -1,58 +1,84 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight flex justify-between items-center">
-            {{ __('Tipo Producto') }}
-            <x-button href="{{ route('tipo-producto.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white">
-                {{ __('Crear Tipo Producto') }}
-            </x-button>
-        </h2>
-    </x-slot>
+<!-- CU12 Procesar pagos -->
+<div class="procesar-pago">
+  <h2>Procesar Pago</h2>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-2xl sm:rounded-lg">
-                <!-- Lista de tipos de productos -->
-                <div class="overflow-x-auto">
-                    <table class="min-w-full divide-y divide-gray-200 shadow-lg">
-                        <thead style="background-color: #5271ff;">
-                            <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider w-1/6">ID</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider w-2/6">Tipo</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider w-3/6">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-200">
-                            @forelse($tiposProductos as $index => $tipoProducto)
-                                <tr class="{{ $index % 2 === 0 ? 'bg-white' : 'bg-[#d4daf7]' }} hover:bg-gray-100">
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 w-1/6">{{ $tipoProducto->id }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 w-2/6">{{ $tipoProducto->tipo }}</td>
-                                    <td class="px-6 py-4 text-sm font-medium w-3/6 text-right">
-                                        <x-button href="{{ route('tipo-producto.edit', $tipoProducto->id) }}" 
-                                            class="bg-indigo-600 hover:bg-indigo-700 text-white mr-2">
-                                            Modificar
-                                        </x-button>
-                                        <form action="{{ route('tipo-producto.destroy', $tipoProducto->id) }}" method="POST" class="inline-block">
-                                            @csrf
-                                            @method('DELETE')
-                                            <x-button type="submit" 
-                                                class="bg-red-600 hover:bg-red-700 text-white"
-                                                onclick="return confirm('¿Estás seguro de eliminar este tipo de producto?')">
-                                                Eliminar
-                                            </x-button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="3" class="px-6 py-4 text-center text-sm text-gray-500">
-                                        No hay tipos de productos disponibles.
-                                    </td>
-                                </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
+  <form>
+    <label for="nombre">Nombre del titular</label>
+    <input type="text" id="nombre" placeholder="Ej: Juan Pérez" required />
+
+    <label for="tarjeta">Número de tarjeta</label>
+    <input type="text" id="tarjeta" maxlength="16" placeholder="1234 5678 9012 3456" required />
+
+    <label for="vencimiento">Fecha de vencimiento</label>
+    <input type="month" id="vencimiento" required />
+
+    <label for="cvv">CVV</label>
+    <input type="text" id="cvv" maxlength="4" placeholder="123" required />
+
+    <label for="monto">Monto</label>
+    <input type="number" id="monto" step="0.01" placeholder="Bs." required />
+
+    <label for="metodo">Método de pago</label>
+    <select id="metodo" required>
+      <option value="">Seleccionar...</option>
+      <option value="tarjeta">Tarjeta de Crédito</option>
+      <option value="qr">QR - Transferencia</option>
+      <option value="efectivo">Pago en efectivo</option>
+    </select>
+
+    <button type="submit">Confirmar Pago</button>
+  </form>
+</div>
+
+<style>
+.procesar-pago {
+  max-width: 500px;
+  margin: 2rem auto;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f7f7f7;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.procesar-pago h2 {
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.procesar-pago form label {
+  display: block;
+  margin-top: 1rem;
+  font-weight: 600;
+}
+
+.procesar-pago input,
+.procesar-pago select {
+  width: 100%;
+  padding: 0.6rem;
+  margin-top: 0.4rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+.procesar-pago button {
+  margin-top: 1.5rem;
+  width: 100%;
+  padding: 0.8rem;
+  background-color: #28a745;
+  color: white;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.procesar-pago button:hover {
+  background-color: #218838;
+}
+</style>
+
 </x-app-layout>
